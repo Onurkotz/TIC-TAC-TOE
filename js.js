@@ -35,25 +35,15 @@ function startGame() {
 
 startGame();
 
-function endGame(draw) {
-  if (draw) {
-    winningMessageTextElement.innerHTML = "It's a draw.";
-  } else {
-    winningMessageTextElement.innerHTML = `${isPlayerOturn ? "O" : "X"} wins!`;
-  }
-  winningMessageElement.classList.add("show");
-}
-
 function setBoardHoverClass() {
-    boardElement.classList.remove(playerXclass);
-    boardElement.classList.remove(playerOclass);
-    if (isPlayerOturn) {
-      boardElement.classList.add(playerOclass);
-    } else {
-      boardElement.classList.add(playerXclass);
-    }
+  boardElement.classList.remove(playerXclass);
+  boardElement.classList.remove(playerOclass);
+  if (isPlayerOturn) {
+    boardElement.classList.add(playerOclass);
+  } else {
+    boardElement.classList.add(playerXclass);
   }
-  
+}
 
 function handleCellClick(e) {
   const cell = e.target;
@@ -66,6 +56,7 @@ function handleCellClick(e) {
   function swapTurns() {
     isPlayerOturn = !isPlayerOturn;
   }
+
   placeMark(cell, currentClass);
   if (checkWin(currentClass)) {
     endGame(false);
@@ -77,6 +68,15 @@ function handleCellClick(e) {
   }
 }
 
+function endGame(draw) {
+  if (draw) {
+    winningMessageTextElement.innerHTML = "It's a draw.";
+  } else {
+    winningMessageTextElement.innerHTML = `${isPlayerOturn ? "O" : "X"} wins!`;
+  }
+  winningMessageElement.classList.add("show");
+}
+
 function isDraw() {
   return [...cellElements].every((cell) => {
     return (
@@ -85,7 +85,6 @@ function isDraw() {
     );
   });
 }
-
 
 function checkWin(currentClass) {
   return winningCombinations.some((combination) => {
